@@ -26,21 +26,14 @@ void GameplayScene::processEvents()
 		}
 
 		if (event.type == sf::Event::MouseButtonPressed) {
-			sf::Vector2i mousePos = sf::Mouse::getPosition(*m_window);
-			sf::Vector2f worldPos = m_window->mapPixelToCoords(mousePos);
+			sf::Vector2f worldPos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
 
-			for (auto& bub : m_bubbles) {
-				if (bub.pop(worldPos)) {
-					++m_numPopped;
+			if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
+				[&](auto& bub) { return bub.pop(worldPos); })
+				&& ++m_numPopped >= m_rows * m_cols) {
 
-					if (m_numPopped >= m_rows * m_cols) {
-						++m_rows;
-						++m_cols;
-
-						freshWrap(m_rows, m_cols);
-						m_numPopped = 0;
-					}
-				}
+				freshWrap(++m_rows, ++m_cols);
+				m_numPopped = 0;
 			}
 		}
 	}
