@@ -17,6 +17,8 @@ Bubble::Bubble(sf::Vector2f t_position) : Bubble()
 
 bool Bubble::pop(sf::Vector2f t_mousePos)
 {
+	if (m_isPopped) return false;
+
 	sf::Vector2f distance = m_body.getPosition() - t_mousePos;
 	float magnitude = std::sqrt(distance.x * distance.x + distance.y * distance.y);
 
