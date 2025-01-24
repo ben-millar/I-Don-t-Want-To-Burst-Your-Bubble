@@ -25,6 +25,8 @@ bool Bubble::pop(sf::Vector2f t_mousePos)
 	if (magnitude < m_radius) {
 		m_isPopped = true;
 		m_body.setFillColor(sf::Color::Blue);
+
+		return true;
 	}
 
 	return false;

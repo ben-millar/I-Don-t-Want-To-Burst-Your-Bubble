@@ -2,12 +2,11 @@
 
 GameplayScene::GameplayScene()
 {
-	for (int col = 0; col < 5; ++col) {
-		for (int row = 0; row < 5; ++row) {
-			sf::Vector2f pos{ 100.f + col * 80.f, 100.f + row * 80.f };
-			m_bubbles.emplace_back(Bubble(pos));
-		}
-	}
+	m_numPopped = 0;
+	m_rows = 2;
+	m_cols = 3;
+
+	freshWrap(m_rows, m_cols);
 }
 
 GameplayScene::~GameplayScene()
@@ -31,7 +30,17 @@ void GameplayScene::processEvents()
 			sf::Vector2f worldPos = m_window->mapPixelToCoords(mousePos);
 
 			for (auto& bub : m_bubbles) {
-				bub.pop(worldPos);
+				if (bub.pop(worldPos)) {
+					++m_numPopped;
+
+					if (m_numPopped >= m_rows * m_cols) {
+						++m_rows;
+						++m_cols;
+
+						freshWrap(m_rows, m_cols);
+						m_numPopped = 0;
+					}
+				}
 			}
 		}
 	}
@@ -48,4 +57,21 @@ void GameplayScene::render()
 	for (auto& bub : m_bubbles) m_window->draw(bub);
 
 	m_window->display();
+}
+
+void GameplayScene::freshWrap(int t_rows, int t_cols) {
+	m_bubbles.clear();
+	m_bubbles.reserve(t_rows * t_cols);
+
+	float offset = 80.f;
+
+	for (int col = 0; col < t_cols; ++col) {
+		for (int row = 0; row < t_rows; ++row) {
+			sf::Vector2f pos{
+				100.f + col * offset,
+				100.f + row * offset
+			};
+			m_bubbles.emplace_back(pos);
+		}
+	}
 }

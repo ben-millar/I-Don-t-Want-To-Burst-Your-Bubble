@@ -1,6 +1,8 @@
 #ifndef BASE_SCENE_H
 #define BASE_SCENE_H
 
+#include <iostream>
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 class BaseScene
