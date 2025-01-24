@@ -1,9 +1,12 @@
 #ifndef GAMEPLAY_SCENE_H
 #define GAMEPLAY_SCENE_H
 
+#include <vector>
+
 #include <SFML/Graphics.hpp>
 
 #include "BaseScene.h"
+#include "Bubble.h"
 
 class GameplayScene :
     public BaseScene
@@ -21,7 +24,7 @@ public:
 
 private:
 
-    sf::CircleShape m_shape;
+    std::vector<Bubble> m_bubbles;
 };
 
 #endif
