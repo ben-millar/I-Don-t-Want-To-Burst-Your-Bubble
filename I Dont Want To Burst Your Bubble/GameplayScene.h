@@ -48,10 +48,10 @@ private:
 
     sf::RectangleShape m_cooldownBar;
     float m_cdHeight = 10.0f;
-    float m_cdNum = 0.0f;
-    const float m_maxCd = 100.0f;
+    float m_cooldown = 0.0f;
+    const float m_maxCooldown = 100.0f;
     const float m_cdIncrement = 15.0f;
-    const float m_cdDecrement = 3.0f;
+    const float m_cdDecrement = 15.0f;
     const float m_cdFasterDecrement = 30.0f;
     const float m_cdBarYOffset = 0;
     const float m_cdBarXOffset = 30;
