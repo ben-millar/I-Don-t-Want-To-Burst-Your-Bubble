@@ -30,7 +30,9 @@ void GameplayScene::processEvents()
 			m_window->close();
 
 		if (sf::Event::KeyPressed == event.type) {
-			m_window->close();
+			if (event.key.code == sf::Keyboard::Escape) {
+				m_window->close();
+			}
 		}
 
 		if (canClick && event.type == sf::Event::MouseButtonPressed) { // if not on cooldown

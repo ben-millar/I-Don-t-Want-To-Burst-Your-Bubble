@@ -18,7 +18,7 @@ public:
         m_onClick = std::forward<F>(callback);
     }
 
-    void handleEvent(const sf::Event& event, std::shared_ptr<sf::RenderWindow> t_window) {
+    bool handleEvent(const sf::Event& event, std::shared_ptr<sf::RenderWindow> t_window) {
         if (event.type == sf::Event::MouseButtonPressed
             && event.mouseButton.button == sf::Mouse::Left) {
 
@@ -28,8 +28,11 @@ public:
 
             if (m_sprite.getGlobalBounds().contains(mousePos)) {
                 m_onClick();
+                return true;
             }
         }
+
+        return false;
     }
 
 private:
