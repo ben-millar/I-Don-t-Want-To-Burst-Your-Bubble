@@ -3,11 +3,14 @@
 GameplayScene::GameplayScene()
 {
 	initMusic();
+	initSoundBuffers();
+
+
 	playMusic();
 
 	m_numPopped = 0;
-	m_rows = 2;
-	m_cols = 3;
+	m_rows = 1;
+	m_cols = 1;
 
 	freshWrap(m_rows, m_cols);
 
@@ -38,13 +41,23 @@ void GameplayScene::processEvents()
 		}
 
 		if (canClick && event.type == sf::Event::MouseButtonPressed) { // if not on cooldown
-			if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
-				[&](auto& bub) { return bub.pop(m_finger.getPosition()); })
-				&& ++m_numPopped >= m_rows * m_cols) {
+			std::for_each(m_bubbles.begin(), m_bubbles.end(), [&](auto& bub) {
+				if (bub.pop(m_finger.getPosition())) {
 
-				freshWrap(++m_rows, ++m_cols);
-				m_numPopped = 0;
-			}
+					float pitch = 1.0f + m_numPopped * 0.05f;
+
+					m_popSound.setPitch(pitch);
+					m_popSound.play();
+
+					//m_violinSound.play();
+
+					if (++m_numPopped >= m_rows * m_cols) {
+						m_newWrapSound.play();
+						freshWrap(++m_rows, ++m_cols);
+						m_numPopped = 0;
+					}
+				}
+				});
 
 			if (m_cooldown < m_maxCooldown - m_cdIncrement) // increment cool down bar value unless max value
 			{
@@ -152,7 +165,7 @@ void GameplayScene::render()
 	m_window->draw(m_arm);
 
 	// We don't need to draw this other than for debugging purposes
-	m_window->draw(m_finger.getBody());
+	//m_window->draw(m_finger.getBody());
 
 	m_window->draw(m_text);
 	m_window->draw(m_cooldownBar);
@@ -206,11 +219,54 @@ void GameplayScene::initMusic()
 void GameplayScene::playMusic()
 {
 	m_music.play();
+	m_music.setVolume(20);
 }
 
 void GameplayScene::stopMusic()
 {
 	m_music.stop();
+}
+
+void GameplayScene::initSoundBuffers()
+{
+	if (!m_popBuffer.loadFromFile("Assets/Sound/Pop.wav"))
+	{
+		std::cout << "Error loading pop sound file" << std::endl;
+	}
+
+	if (!m_violinBuffer.loadFromFile("Assets/Sound/Violin4.wav"))
+	{
+		std::cout << "Error loading violin sound file" << std::endl;
+	}
+
+	if (!m_newWrapBuffer.loadFromFile("Assets/Sound/NewWrap2.wav"))
+	{
+		std::cout << "Error loading wrap sound file" << std::endl;
+	}
+
+	m_popSound.setBuffer(m_popBuffer);
+	m_violinSound.setBuffer(m_violinBuffer);
+	m_newWrapSound.setBuffer(m_newWrapBuffer);
+
+	m_popSound.setVolume(70);
+	m_violinSound.setVolume(10);
+	m_newWrapSound.setVolume(50);
+
+}
+
+void GameplayScene::gameOver()
+{
+	// Stop the current music
+	m_music.stop();
+
+	if (!m_music.openFromFile("Assets/Music/MusicSlowingDown.wav"))
+	{
+		std::cout << "Error loading game over music file" << std::endl;
+	}
+
+	m_music.setLoop(false);
+	m_music.setVolume(30);
+	m_music.play();
 }
 
 void GameplayScene::setupFont()
