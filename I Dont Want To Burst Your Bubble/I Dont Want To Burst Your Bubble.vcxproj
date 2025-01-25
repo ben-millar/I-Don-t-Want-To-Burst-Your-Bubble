@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Bubble.h" />
+    <ClInclude Include="Finger.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameplayScene.h" />
     <ClInclude Include="Globals.h" />
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bubble.cpp" />
+    <ClCompile Include="Finger.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="main.cpp" />

@@ -39,6 +39,9 @@
     <ClInclude Include="Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Finger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bubble.cpp">
@@ -52,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="GameplayScene.cpp">
       <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Finger.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
