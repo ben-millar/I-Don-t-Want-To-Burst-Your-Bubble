@@ -3,6 +3,9 @@
 GameplayScene::GameplayScene()
 {
 	initMusic();
+	initSoundBuffers();
+
+	
 	playMusic();
 
 	m_numPopped = 0;
@@ -30,14 +33,37 @@ void GameplayScene::processEvents()
 			m_window->close();
 		}
 
-		if (event.type == sf::Event::MouseButtonPressed) {
-			if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
-				[&](auto& bub) { return bub.pop(m_finger.getPosition()); })
-				&& ++m_numPopped >= m_rows * m_cols) {
 
-				freshWrap(++m_rows, ++m_cols);
-				m_numPopped = 0;
+		if (event.type == sf::Event::MouseButtonPressed) {
+
+
+			for (Bubble& bub : m_bubbles)
+			{
+				if (bub.pop(m_finger.getPosition()))
+				{
+					m_popSound.play();
+					m_numPopped++;
+
+					float pitch = 1.0f + m_numPopped * 0.05f;
+
+					m_violinSound.setPitch(pitch);
+					m_violinSound.play();
+
+					if (m_numPopped >= m_rows * m_cols)
+					{
+						freshWrap(++m_rows, ++m_cols);
+						m_numPopped = 0;
+					}
+				}
 			}
+
+			//if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
+			//	[&](auto& bub) { return bub.pop(m_finger.getPosition()); })
+			//	&& ++m_numPopped >= m_rows * m_cols) {
+
+			//	freshWrap(++m_rows, ++m_cols);
+			//	m_numPopped = 0;
+			//}
 		}
 	}
 }
@@ -136,9 +162,26 @@ void GameplayScene::initMusic()
 void GameplayScene::playMusic()
 {
 	m_music.play();
+	m_music.setVolume(30);
 }
 
 void GameplayScene::stopMusic()
 {
 	m_music.stop();
+}
+
+void GameplayScene::initSoundBuffers()
+{
+	if (!m_popBuffer.loadFromFile("Assets/Sound/Pop.wav"))
+	{
+		std::cout << "Error loading pop sound file" << std::endl;
+	}
+
+	if (!m_violinBuffer.loadFromFile("Assets/Sound/Violin.wav"))
+	{
+		std::cout << "Error loading violin sound file" << std::endl;
+	}
+
+	m_popSound.setBuffer(m_popBuffer);
+	m_violinSound.setBuffer(m_violinBuffer);
 }

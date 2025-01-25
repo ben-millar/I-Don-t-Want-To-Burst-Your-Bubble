@@ -45,6 +45,13 @@ private:
     /// </summary>
     void initMusic();
 
+    sf::Sound m_popSound;
+    sf::Sound m_violinSound;
+    sf::SoundBuffer m_popBuffer;
+    sf::SoundBuffer m_violinBuffer;
+
+    void initSoundBuffers();
+
     void playMusic();
 
     void stopMusic();
