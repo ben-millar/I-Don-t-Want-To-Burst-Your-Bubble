@@ -5,12 +5,12 @@ GameplayScene::GameplayScene()
 	initMusic();
 	initSoundBuffers();
 
-	
+
 	playMusic();
 
 	m_numPopped = 0;
-	m_rows = 2;
-	m_cols = 3;
+	m_rows = 1;
+	m_cols = 1;
 
 	freshWrap(m_rows, m_cols);
 
@@ -41,16 +41,19 @@ void GameplayScene::processEvents()
 			{
 				if (bub.pop(m_finger.getPosition()))
 				{
+					float pitch = 1.0f + m_numPopped * 0.05f;
+
+					m_popSound.setPitch(pitch);
+
 					m_popSound.play();
 					m_numPopped++;
 
-					float pitch = 1.0f + m_numPopped * 0.05f;
 
-					m_violinSound.setPitch(pitch);
-					m_violinSound.play();
+					//m_violinSound.play();
 
 					if (m_numPopped >= m_rows * m_cols)
 					{
+						m_newWrapSound.play();
 						freshWrap(++m_rows, ++m_cols);
 						m_numPopped = 0;
 					}
@@ -162,7 +165,7 @@ void GameplayScene::initMusic()
 void GameplayScene::playMusic()
 {
 	m_music.play();
-	m_music.setVolume(30);
+	m_music.setVolume(20);
 }
 
 void GameplayScene::stopMusic()
@@ -177,13 +180,24 @@ void GameplayScene::initSoundBuffers()
 		std::cout << "Error loading pop sound file" << std::endl;
 	}
 
-	if (!m_violinBuffer.loadFromFile("Assets/Sound/Violin.wav"))
+	if (!m_violinBuffer.loadFromFile("Assets/Sound/Violin4.wav"))
 	{
 		std::cout << "Error loading violin sound file" << std::endl;
 	}
 
+	if (!m_newWrapBuffer.loadFromFile("Assets/Sound/NewWrap2.wav"))
+	{
+		std::cout << "Error loading wrap sound file" << std::endl;
+	}
+
 	m_popSound.setBuffer(m_popBuffer);
 	m_violinSound.setBuffer(m_violinBuffer);
+	m_newWrapSound.setBuffer(m_newWrapBuffer);
+
+	m_popSound.setVolume(70);
+	m_violinSound.setVolume(10);
+	m_newWrapSound.setVolume(50);
+
 }
 
 void GameplayScene::gameOver()

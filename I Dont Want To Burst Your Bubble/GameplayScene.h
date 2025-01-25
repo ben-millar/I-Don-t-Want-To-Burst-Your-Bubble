@@ -47,8 +47,10 @@ private:
 
     sf::Sound m_popSound;
     sf::Sound m_violinSound;
+    sf::Sound m_newWrapSound;
     sf::SoundBuffer m_popBuffer;
     sf::SoundBuffer m_violinBuffer;
+    sf::SoundBuffer m_newWrapBuffer;
 
     void gameOver();
 
