@@ -32,8 +32,11 @@ void Finger::move(float t_length)
 		m_location += m_velocity;
 
 		// Keep within bounds
-		m_location.x = std::clamp(m_location.x, 0.f, (float)WINDOW_WIDTH);
-		m_location.y = std::clamp(m_location.y, 0.f, (float)WINDOW_HEIGHT);
+		float scaleX = WINDOW_WIDTH / RESOLUTION.x;
+		float scaleY = WINDOW_HEIGHT / RESOLUTION.y;
+
+		m_location.x = std::clamp(m_location.x, 0.f, RESOLUTION.x);
+		m_location.y = std::clamp(m_location.y, 0.f, RESOLUTION.y);
 
 		m_mouseDot.setPosition(m_location);
 	}
