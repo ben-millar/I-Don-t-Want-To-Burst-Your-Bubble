@@ -14,7 +14,7 @@ Arm::Arm()
 
 	m_arm.setTexture(m_defaultTex);
 	m_arm.setScale(-0.5f, 0.5f);
-	m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.73f, m_arm.getLocalBounds().height * 0.03f});
+	m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.65f, m_arm.getLocalBounds().height * 0.03f});
 }
 
 Arm::Arm(sf::Vector2f t_position) : Arm()
@@ -40,11 +40,11 @@ void Arm::isClicking(bool t_isClicking)
 	if (t_isClicking) {
 		m_arm.setTexture(m_clickTex);
 		m_arm.setScale(-0.5f, 0.5f);
-		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.73f, m_arm.getLocalBounds().height * 0.03f });
+		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.67f, m_arm.getLocalBounds().height * 0.03f });
 	}
 	else {
 		m_arm.setTexture(m_defaultTex);
 		m_arm.setScale(-0.5f, 0.5f);
-		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.73f, m_arm.getLocalBounds().height * 0.03f });
+		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.65f, m_arm.getLocalBounds().height * 0.03f });
 	}
 }

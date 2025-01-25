@@ -62,7 +62,6 @@ void GameplayScene::update(sf::Time t_dT)
 			bub.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
 		});
 
-
 	m_bubbleWrap.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
 
 	// Set arm position
@@ -82,11 +81,11 @@ void GameplayScene::render()
 	m_window->draw(m_bubbleWrap);
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
-	
-	// We don't need to draw this other than for debugging purposes
-	//m_window->draw(m_finger.getBody());
 
 	m_window->draw(m_arm);
+
+	// We don't need to draw this other than for debugging purposes
+	m_window->draw(m_finger.getBody());
 
 	m_window->display();
 }
