@@ -25,6 +25,10 @@ public:
 
     virtual void render() override;
 
+    void setupFont();
+
+    void setupCooldown();
+
 private:
 
     sf::RectangleShape m_bubbleWrap;
@@ -38,6 +42,21 @@ private:
 
     // finger
     Finger m_finger;
+
+    sf::Font m_font;  // font for writing text
+    sf::Text m_text;
+
+    sf::RectangleShape m_cooldownBar;
+    float m_cdHeight = 10.0f;
+    float m_cdNum = 0.0f;
+    const float m_maxCd = 100.0f;
+    const float m_cdIncrement = 15.0f;
+    const float m_cdDecrement = 3.0f;
+    const float m_cdFasterDecrement = 30.0f;
+    const float m_cdBarYOffset = 0;
+    const float m_cdBarXOffset = 30;
+
+    bool canClick = true;
 
 
     /// <summary>

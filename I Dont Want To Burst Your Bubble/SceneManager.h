@@ -57,6 +57,7 @@ private:
 	Finger m_finger;
 	std::shared_ptr<sf::RenderWindow> m_window;
 
+
 };
 
 #endif
