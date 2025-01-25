@@ -111,7 +111,7 @@ void GameplayScene::render()
 	m_window->draw(m_arm);
 
 	// We don't need to draw this other than for debugging purposes
-	m_window->draw(m_finger.getBody());
+	//m_window->draw(m_finger.getBody());
 
 	m_window->display();
 }
@@ -184,4 +184,19 @@ void GameplayScene::initSoundBuffers()
 
 	m_popSound.setBuffer(m_popBuffer);
 	m_violinSound.setBuffer(m_violinBuffer);
+}
+
+void GameplayScene::gameOver()
+{
+	// Stop the current music
+	m_music.stop();
+
+	if (!m_music.openFromFile("Assets/Music/MusicSlowingDown.wav"))
+	{
+		std::cout << "Error loading game over music file" << std::endl;
+	}
+
+	m_music.setLoop(false);
+	m_music.setVolume(30);
+	m_music.play();
 }

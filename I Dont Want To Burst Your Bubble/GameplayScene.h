@@ -50,6 +50,8 @@ private:
     sf::SoundBuffer m_popBuffer;
     sf::SoundBuffer m_violinBuffer;
 
+    void gameOver();
+
     void initSoundBuffers();
 
     void playMusic();
