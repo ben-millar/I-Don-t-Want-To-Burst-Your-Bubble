@@ -7,6 +7,7 @@
 #include <SFML/Audio.hpp>
 
 #include "BaseScene.h"
+#include "Arm.h"
 #include "Bubble.h"
 #include "Finger.h"
 
@@ -69,6 +70,8 @@ private:
 
     // Vector to store our tasty bubbles
     std::vector<Bubble> m_bubbles;
+
+    Arm m_arm;
 
     // Track the number of bubbles popped
     int m_numPopped;
