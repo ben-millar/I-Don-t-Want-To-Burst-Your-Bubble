@@ -25,6 +25,8 @@ public:
 
     virtual void render() override;
 
+    void setupFont();
+
 private:
 
     sf::RectangleShape m_bubbleWrap;
@@ -38,6 +40,9 @@ private:
 
     // finger
     Finger m_finger;
+
+    sf::Font m_font;  // font for writing text
+    sf::Text m_text;
 
 
     /// <summary>

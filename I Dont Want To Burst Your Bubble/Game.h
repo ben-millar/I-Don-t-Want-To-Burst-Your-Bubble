@@ -17,12 +17,14 @@ public:
 	~Game() = default;
 
 	void run();
+	void setupFont();
 
 private:
 
 	void init();
 
 	std::shared_ptr<sf::RenderWindow> m_window;
+
 };
 
 #endif

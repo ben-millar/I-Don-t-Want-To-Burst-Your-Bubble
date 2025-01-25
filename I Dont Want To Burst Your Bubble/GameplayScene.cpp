@@ -12,6 +12,8 @@ GameplayScene::GameplayScene()
 	freshWrap(m_rows, m_cols);
 
 	m_gameTime = 0.0;
+
+	setupFont();
 }
 
 GameplayScene::~GameplayScene()
@@ -87,6 +89,8 @@ void GameplayScene::render()
 	// We don't need to draw this other than for debugging purposes
 	m_window->draw(m_finger.getBody());
 
+	m_window->draw(m_text);
+
 	m_window->display();
 }
 
@@ -141,4 +145,18 @@ void GameplayScene::playMusic()
 void GameplayScene::stopMusic()
 {
 	m_music.stop();
+}
+
+void GameplayScene::setupFont()
+{
+	if (!m_font.loadFromFile("Assets/Font/BubFont.ttf"))
+	{
+		std::cout << "error with font file " << std::endl;
+	}
+
+	m_text.setFont(m_font);
+	m_text.setCharacterSize(40);
+	m_text.setString("TEST of text");
+	m_text.setFillColor(sf::Color::Black);
+	m_text.setPosition(100,100);
 }
