@@ -36,6 +36,7 @@ private:
 	/// </summary>
 	sf::Texture m_bubbleTexture;
 
+
 	virtual void draw(sf::RenderTarget& t_target, sf::RenderStates t_states) const override {
 		t_target.draw(m_body);
 	}

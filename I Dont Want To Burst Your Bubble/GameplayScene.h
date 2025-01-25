@@ -25,6 +25,9 @@ public:
 
 private:
 
+    sf::RectangleShape m_bubbleWrap;
+
+
     /// <summary>
     /// Variable to store the background music
     /// </summary>
