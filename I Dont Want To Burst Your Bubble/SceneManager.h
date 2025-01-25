@@ -7,6 +7,7 @@
 
 #include "Globals.h"
 #include "BaseScene.h"
+#include "Finger.h"
 
 enum class SceneType { GAMEPLAY };
 using Scene = std::unique_ptr<BaseScene>;
@@ -53,6 +54,7 @@ private:
 	SceneManager() {}
 	SceneCache m_sceneCache;
 	Scene m_currentScene;
+	Finger m_finger;
 	std::shared_ptr<sf::RenderWindow> m_window;
 
 };

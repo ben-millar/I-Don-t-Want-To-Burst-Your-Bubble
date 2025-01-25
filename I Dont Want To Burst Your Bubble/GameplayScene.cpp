@@ -60,6 +60,11 @@ void GameplayScene::update(sf::Time t_dT)
 		[&](auto& bub) {
 			bub.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
 		});
+
+	sf::Vector2f worldPos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
+
+	m_finger.update(worldPos);
+
 }
 
 void GameplayScene::render()
@@ -67,6 +72,8 @@ void GameplayScene::render()
 	m_window->clear(sf::Color {133, 193, 255});
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
+	
+	m_window->draw(m_finger.getBody());
 
 	m_window->display();
 }
