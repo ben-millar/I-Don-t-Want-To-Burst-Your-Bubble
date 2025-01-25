@@ -5,7 +5,6 @@ GameplayScene::GameplayScene()
 	initMusic();
 	playMusic();
 
-
 	m_numPopped = 0;
 	m_rows = 2;
 	m_cols = 3;
@@ -32,10 +31,8 @@ void GameplayScene::processEvents()
 		}
 
 		if (event.type == sf::Event::MouseButtonPressed) {
-			sf::Vector2f worldPos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
-
 			if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
-				[&](auto& bub) { return bub.pop(worldPos); })
+				[&](auto& bub) { return bub.pop(m_finger.getPosition()); })
 				&& ++m_numPopped >= m_rows * m_cols) {
 
 				freshWrap(++m_rows, ++m_cols);
@@ -45,10 +42,14 @@ void GameplayScene::processEvents()
 	}
 }
 
+static int count{ 0 };
+
 void GameplayScene::update(sf::Time t_dT)
 {
-
 	m_gameTime += t_dT.asSeconds();
+
+	// Don't ask. I'm sorry.
+	if (!(++count % 60)) m_arm.setPosition(m_arm.getPosition());
 
 	float sin_prim = generateSineWaveDelta(m_gameTime, 0.05, 0.0, 2.5);
 	float sin_sec = generateSineWaveDelta(m_gameTime, 0.333, 0.5, 0.5);
@@ -64,9 +65,10 @@ void GameplayScene::update(sf::Time t_dT)
 
 	m_bubbleWrap.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
 
-	sf::Vector2f worldPos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
+	sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
+	m_finger.update(mousePos);
 
-	m_finger.update(worldPos);
+	m_arm.setPosition(m_finger.getPosition());
 
 }
 
@@ -78,7 +80,10 @@ void GameplayScene::render()
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
 	
-	m_window->draw(m_finger.getBody());
+	// We don't need to draw this other than for debugging purposes
+	//m_window->draw(m_finger.getBody());
+
+	m_window->draw(m_arm);
 
 	m_window->display();
 }
@@ -108,8 +113,6 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 	m_bubbleWrap.setSize(sf::Vector2f(wrapWidth + offset, wrapHeight + offset));
 	m_bubbleWrap.setPosition(400.f, 400.f);
 	m_bubbleWrap.setFillColor(sf::Color { 131, 0, 4});
-
-	
 }
 
 float GameplayScene::generateSineWaveDelta(double t_time, double t_frequency, double t_phase, double t_amplitude)
