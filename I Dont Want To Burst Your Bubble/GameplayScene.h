@@ -8,6 +8,7 @@
 
 #include "BaseScene.h"
 #include "Bubble.h"
+#include "Finger.h"
 
 class GameplayScene :
     public BaseScene
@@ -32,6 +33,11 @@ private:
     /// Variable to store the background music
     /// </summary>
     sf::Music m_music;
+
+
+    // finger
+    Finger m_finger;
+
 
     /// <summary>
     /// Method to initialize the background music
