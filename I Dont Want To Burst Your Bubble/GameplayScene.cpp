@@ -31,11 +31,16 @@ void GameplayScene::processEvents()
 			m_window->close();
 		}
 
+		if (event.type == sf::Event::MouseMoved) {
+			sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
+			m_arm.setPosition(mousePos);
+		}
+
 		if (event.type == sf::Event::MouseButtonPressed) {
-			sf::Vector2f worldPos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
+			sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
 
 			if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
-				[&](auto& bub) { return bub.pop(worldPos); })
+				[&](auto& bub) { return bub.pop(mousePos); })
 				&& ++m_numPopped >= m_rows * m_cols) {
 
 				freshWrap(++m_rows, ++m_cols);
@@ -45,10 +50,14 @@ void GameplayScene::processEvents()
 	}
 }
 
+static int count{ 0 };
+
 void GameplayScene::update(sf::Time t_dT)
 {
-
 	m_gameTime += t_dT.asSeconds();
+
+	// Don't ask. I'm sorry.
+	if (!(++count % 60)) m_arm.setPosition(m_arm.getPosition());
 
 	float sin_prim = generateSineWaveDelta(m_gameTime, 0.05, 0.0, 2.5);
 	float sin_sec = generateSineWaveDelta(m_gameTime, 0.333, 0.5, 0.5);
@@ -79,6 +88,8 @@ void GameplayScene::render()
 	for (auto& bub : m_bubbles) m_window->draw(bub);
 	
 	m_window->draw(m_finger.getBody());
+
+	m_window->draw(m_arm);
 
 	m_window->display();
 }

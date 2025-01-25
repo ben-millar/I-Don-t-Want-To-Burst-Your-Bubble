@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arm.h" />
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Bubble.h" />
     <ClInclude Include="Finger.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Arm.cpp" />
     <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="Finger.cpp" />
     <ClCompile Include="Game.cpp" />
