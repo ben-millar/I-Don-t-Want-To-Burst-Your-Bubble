@@ -36,6 +36,10 @@
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Images\hand_click.png" />
+    <Image Include="Assets\Images\hand_default.png" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -114,7 +118,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SFML_SDK)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-system.lib;sfml-graphics.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

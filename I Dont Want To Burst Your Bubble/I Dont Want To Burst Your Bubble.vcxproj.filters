@@ -40,7 +40,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Finger.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Arm.h">
       <Filter>Header Files</Filter>
@@ -60,10 +60,18 @@
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Finger.cpp">
-		<Filter>Source Files</Filter>
-	</ClCompile>
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Arm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Images\hand_click.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\hand_default.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

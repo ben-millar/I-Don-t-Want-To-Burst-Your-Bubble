@@ -36,4 +36,5 @@ void Game::init()
 	m_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "I (Don't) Want To Burst Your Bubble", sf::Style::Titlebar | sf::Style::Close);
 	m_window->setKeyRepeatEnabled(false);
 	m_window->setView({ RESOLUTION / 2.f, RESOLUTION });
+	m_window->setMouseCursorVisible(false);
 }

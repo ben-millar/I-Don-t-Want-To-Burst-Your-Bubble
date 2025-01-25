@@ -15,7 +15,8 @@ public:
 	sf::Vector2f getPosition() { return m_arm.getPosition(); }
 
 private:
-	sf::RectangleShape m_arm;
+	sf::Texture m_armTex;
+	sf::Sprite m_arm;
 
 	virtual void draw(sf::RenderTarget& t_target, sf::RenderStates t_states) const override {
 		t_target.draw(m_arm);
