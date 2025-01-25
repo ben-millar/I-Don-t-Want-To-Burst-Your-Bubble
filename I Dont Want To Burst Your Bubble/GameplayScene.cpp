@@ -15,6 +15,9 @@ GameplayScene::GameplayScene()
 	freshWrap(m_rows, m_cols);
 
 	m_gameTime = 0.0;
+
+	setupFont();
+	setupCooldown();
 }
 
 GameplayScene::~GameplayScene()
@@ -30,43 +33,41 @@ void GameplayScene::processEvents()
 			m_window->close();
 
 		if (sf::Event::KeyPressed == event.type) {
-			m_window->close();
+			if (event.key.code == sf::Keyboard::Escape) {
+				m_window->close();
+			}
 		}
 
+		if (canClick && event.type == sf::Event::MouseButtonPressed) { // if not on cooldown
+			std::for_each(m_bubbles.begin(), m_bubbles.end(), [&](auto& bub) {
+				if (bub.pop(m_finger.getPosition())) {
 
-		if (event.type == sf::Event::MouseButtonPressed) {
-
-
-			for (Bubble& bub : m_bubbles)
-			{
-				if (bub.pop(m_finger.getPosition()))
-				{
 					float pitch = 1.0f + m_numPopped * 0.05f;
 
 					m_popSound.setPitch(pitch);
-
 					m_popSound.play();
-					m_numPopped++;
-
 
 					//m_violinSound.play();
 
-					if (m_numPopped >= m_rows * m_cols)
-					{
+					if (++m_numPopped >= m_rows * m_cols) {
 						m_newWrapSound.play();
 						freshWrap(++m_rows, ++m_cols);
 						m_numPopped = 0;
 					}
 				}
+				});
+
+			if (m_cooldown < m_maxCooldown - m_cdIncrement) // increment cool down bar value unless max value
+			{
+				m_cooldown += m_cdIncrement;
+				m_cooldownBar.setSize(sf::Vector2f(m_cooldown, m_cdHeight));
 			}
-
-			//if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
-			//	[&](auto& bub) { return bub.pop(m_finger.getPosition()); })
-			//	&& ++m_numPopped >= m_rows * m_cols) {
-
-			//	freshWrap(++m_rows, ++m_cols);
-			//	m_numPopped = 0;
-			//}
+			else
+			{
+				m_cooldown = m_maxCooldown;
+				canClick = false;
+				m_cooldownBar.setFillColor(sf::Color::Red);
+			}
 		}
 	}
 }
@@ -98,8 +99,48 @@ void GameplayScene::update(sf::Time t_dT)
 	m_finger.update(mousePos);
 	m_arm.setPosition(m_finger.getPosition());
 
-	// Set arm sprite
-	m_arm.isClicking(sf::Mouse::isButtonPressed(sf::Mouse::Left));
+	// Update cooldown
+
+	if (canClick) // faster decrement for when you cant click (cooldown)
+	{
+		// Set arm sprite
+		m_arm.isClicking(sf::Mouse::isButtonPressed(sf::Mouse::Left));
+
+		float scale = m_cooldown / m_maxCooldown;
+
+		if (m_cooldown >= 0 + m_cdDecrement * scale * scale * t_dT.asSeconds()) // decrement cooldown value unless minimal value
+		{
+			m_cooldown -= m_cdDecrement * t_dT.asSeconds();
+		}
+		else
+		{
+			m_cooldown = 0;
+		}
+
+		m_cooldownBar.setSize(sf::Vector2f(m_cooldown, m_cdHeight));
+
+	}
+	else // faster decrementing
+	{
+		// Set arm sprite
+		m_arm.isClicking(false);
+
+		if (m_cooldown > 0 + m_cdFasterDecrement * t_dT.asSeconds())
+		{
+			m_cooldown -= m_cdFasterDecrement * t_dT.asSeconds();
+		}
+		else
+		{
+			m_cooldown = 0;
+			canClick = true; // if decrement reaches 0, cooldown is done
+			m_cooldownBar.setFillColor(sf::Color::Yellow);
+
+		}
+		m_cooldownBar.setSize(sf::Vector2f(m_cooldown, m_cdHeight));
+	}
+
+	m_cooldownBar.setPosition(m_finger.getPosition().x + m_cdBarXOffset, m_finger.getPosition().y + m_cdBarYOffset);
+
 
 }
 
@@ -115,6 +156,9 @@ void GameplayScene::render()
 
 	// We don't need to draw this other than for debugging purposes
 	//m_window->draw(m_finger.getBody());
+
+	m_window->draw(m_text);
+	m_window->draw(m_cooldownBar);
 
 	m_window->display();
 }
@@ -213,4 +257,26 @@ void GameplayScene::gameOver()
 	m_music.setLoop(false);
 	m_music.setVolume(30);
 	m_music.play();
+}
+
+void GameplayScene::setupFont()
+{
+	if (!m_font.loadFromFile("Assets/Font/BubFont.ttf"))
+	{
+		std::cout << "error with font file " << std::endl;
+	}
+
+	m_text.setFont(m_font);
+	m_text.setCharacterSize(40);
+	m_text.setString("TEST of text");
+	m_text.setOrigin(m_text.getLocalBounds().width/2, m_text.getLocalBounds().height / 2);
+	m_text.setFillColor(sf::Color::Black);
+	m_text.setPosition(RESOLUTION.x/2,RESOLUTION.y/2);
+}
+
+void GameplayScene::setupCooldown()
+{
+	m_cooldownBar.setFillColor(sf::Color::Yellow);
+	m_cooldownBar.setSize(sf::Vector2f(m_cooldown, m_cdHeight));
+	m_cooldownBar.setPosition(m_finger.getPosition().x + m_cdBarXOffset, m_finger.getPosition().y + m_cdBarYOffset);
 }

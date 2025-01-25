@@ -1,7 +1,7 @@
 #ifndef ARM_H
 #define ARM_H
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp> 
 
 class Arm : public sf::Drawable
 {

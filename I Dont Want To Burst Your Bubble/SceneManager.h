@@ -9,7 +9,7 @@
 #include "BaseScene.h"
 #include "Finger.h"
 
-enum class SceneType { GAMEPLAY };
+enum class SceneType { GAMEPLAY, MAIN_MENU };
 using Scene = std::unique_ptr<BaseScene>;
 
 class SceneManager
@@ -56,6 +56,7 @@ private:
 	Scene m_currentScene;
 	Finger m_finger;
 	std::shared_ptr<sf::RenderWindow> m_window;
+
 
 };
 

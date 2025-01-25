@@ -19,11 +19,10 @@ MenuScene::MenuScene()
 	}
 
 	m_bg.setTexture(m_bgTex);
-	auto sceneManager = SceneManager::getInstance();
 
 	m_playButton = new Button(m_playTex, { 1000.f, 100.f });
-	m_playButton->setOnClick([&]() {
-		sceneManager->setScene(SceneType::GAMEPLAY);
+	m_playButton->setOnClick([]() {
+		SceneManager::getInstance()->setScene(SceneType::GAMEPLAY);
 	});
 
 	m_controlsButton = new Button(m_controlsTex, { 1000.f, 400.f });
@@ -59,12 +58,14 @@ void MenuScene::processEvents()
 			m_window->close();
 
 		if (sf::Event::KeyPressed == event.type) {
-			m_window->close();
+			if (event.key.code == sf::Keyboard::Escape) {
+				m_window->close();
+			}
 		}
 
-		std::for_each(m_buttons.begin(), m_buttons.end(),
-			[&](Button* button) { button->handleEvent(event, m_window); }
-		);
+		for (auto& button : m_buttons) {
+			if (button->handleEvent(event, m_window)) return;
+		}
 	}
 }
 

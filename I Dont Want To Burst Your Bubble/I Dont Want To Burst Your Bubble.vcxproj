@@ -26,19 +26,29 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameplayScene.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arm.cpp" />
     <ClCompile Include="Bubble.cpp" />
+    <ClCompile Include="Button.h" />
     <ClCompile Include="Finger.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Images\background.png" />
+    <Image Include="Assets\Images\controls_button.png" />
+    <Image Include="Assets\Images\controls_button_pressed.png" />
+    <Image Include="Assets\Images\exit_button.png" />
+    <Image Include="Assets\Images\exit_button_pressed.png" />
     <Image Include="Assets\Images\hand_click.png" />
     <Image Include="Assets\Images\hand_default.png" />
+    <Image Include="Assets\Images\play_button.png" />
+    <Image Include="Assets\Images\play_button_pressed.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
