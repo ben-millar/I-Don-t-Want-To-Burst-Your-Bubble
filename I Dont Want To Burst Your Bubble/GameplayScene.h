@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "BaseScene.h"
 #include "Bubble.h"
@@ -31,6 +32,18 @@ private:
     /// <param name="t_cols">Number of columns of bubbles</param>
     void freshWrap(int t_rows, int t_cols);
 
+    /// <summary>
+    /// This function generates the derivative of a sin wave at a given time point.
+    /// I.e., rather than returning the absolute position of the wave, we return the
+    /// direction it's moving.
+    /// </summary>
+    /// <param name="t_time">Delta time</param>
+    /// <param name="t_frequency">Wave frequency (wave-to-wave peak time)</param>
+    /// <param name="t_phase">Wave phase (I.e., offset)</param>
+    /// <param name="t_amplitude">Amplitude of the wave (peak height)</param>
+    /// <returns>The rate of change of the sine wave at the given timepoint</returns>
+    float generateSineWaveDelta(float t_time, float t_frequency, float t_phase, float t_amplitude = 1.0f);
+
     // Vector to store our tasty bubbles
     std::vector<Bubble> m_bubbles;
 
@@ -40,6 +53,14 @@ private:
     // Tracks the rows/columns of bubble wrap
     float m_rows;
     float m_cols;
+
+    Bubble m_testBubble;
+    float m_testMag;
+    float m_testDir;
+    const float MAX_MAG{ 100.f };
+
+    // Atomically increasing tracker of game time since start
+    double m_gameTime;
 };
 
 #endif

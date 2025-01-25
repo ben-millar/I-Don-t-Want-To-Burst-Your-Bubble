@@ -7,6 +7,10 @@ GameplayScene::GameplayScene()
 	m_cols = 3;
 
 	freshWrap(m_rows, m_cols);
+
+	m_testBubble.setPosition({ 500.f, 500.f });
+
+	m_gameTime = 0.0;
 }
 
 GameplayScene::~GameplayScene()
@@ -41,6 +45,14 @@ void GameplayScene::processEvents()
 
 void GameplayScene::update(sf::Time t_dT)
 {
+	m_gameTime += t_dT.asSeconds();
+
+	float sin = generateSineWaveDelta(m_gameTime, 0.05f, 0.0f, 2.5f);
+	float sin2 = generateSineWaveDelta(m_gameTime, 0.5, 0.0f, 0.5f);
+
+	m_testBubble.move({ sin + sin2, 0.f });
+
+
 }
 
 void GameplayScene::render()
@@ -48,6 +60,8 @@ void GameplayScene::render()
 	m_window->clear(sf::Color::Black);
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
+
+	m_window->draw(m_testBubble);
 
 	m_window->display();
 }
@@ -67,4 +81,10 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 			m_bubbles.emplace_back(pos);
 		}
 	}
+}
+
+float GameplayScene::generateSineWaveDelta(float t_time, float t_frequency, float t_phase, float t_amplitude)
+{
+	const float TWO_PI = 6.28318530718f;
+	return t_amplitude * TWO_PI * t_frequency * cos(TWO_PI * t_frequency * t_time + t_phase) * (1.0f / 60.0f);
 }

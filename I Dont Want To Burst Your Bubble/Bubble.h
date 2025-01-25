@@ -15,6 +15,10 @@ public:
 		m_body.setPosition(t_position);
 	}
 
+	void move(sf::Vector2f t_delta) {
+		m_body.setPosition(m_body.getPosition() + t_delta);
+	}
+
 	bool pop(sf::Vector2f t_mousePos);
 
 private:
