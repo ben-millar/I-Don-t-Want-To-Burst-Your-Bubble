@@ -19,6 +19,8 @@ public:
 	void move(float t_length);
 	sf::CircleShape getBody();
 
+	sf::Vector2f getPosition();
+
 
 private:
 
