@@ -9,7 +9,7 @@
 #include "BaseScene.h"
 #include "Finger.h"
 
-enum class SceneType { GAMEPLAY };
+enum class SceneType { GAMEPLAY, MAIN_MENU };
 using Scene = std::unique_ptr<BaseScene>;
 
 class SceneManager

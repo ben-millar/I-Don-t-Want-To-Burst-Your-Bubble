@@ -12,8 +12,6 @@ Finger::Finger()
 
 void Finger::update(sf::Vector2f t_mousePosition)
 {
-
-
 	m_velocity = t_mousePosition - m_mouseDot.getPosition();
 
 	m_length = std::sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y); // pythagoras

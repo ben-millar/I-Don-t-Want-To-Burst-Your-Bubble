@@ -7,10 +7,11 @@ void Game::run()
 	auto sceneManager = SceneManager::getInstance();
 	sceneManager->setRenderWindow(m_window);
 
+	sceneManager->registerScene<MenuScene>(SceneType::MAIN_MENU);
 	sceneManager->registerScene<GameplayScene>(SceneType::GAMEPLAY);
 
-	sceneManager->setScene(SceneType::GAMEPLAY);
-
+	sceneManager->setScene(SceneType::MAIN_MENU);
+	
 	sf::Clock clock;
 	sf::Time lag = sf::Time::Zero;
 	const sf::Time MS_PER_UPDATE = sf::seconds(1 / 60.f);
