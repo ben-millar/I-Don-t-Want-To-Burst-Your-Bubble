@@ -14,6 +14,7 @@ GameplayScene::GameplayScene()
 	m_gameTime = 0.0;
 
 	setupFont();
+	setupCooldown();
 }
 
 GameplayScene::~GameplayScene()
@@ -32,13 +33,25 @@ void GameplayScene::processEvents()
 			m_window->close();
 		}
 
-		if (event.type == sf::Event::MouseButtonPressed) {
+		if (canClick && event.type == sf::Event::MouseButtonPressed) { // if not on cooldown
 			if (std::any_of(m_bubbles.begin(), m_bubbles.end(),
 				[&](auto& bub) { return bub.pop(m_finger.getPosition()); })
 				&& ++m_numPopped >= m_rows * m_cols) {
 
 				freshWrap(++m_rows, ++m_cols);
 				m_numPopped = 0;
+			}
+
+			if (m_cdNum < m_maxCd - m_cdIncrement) // increment cool down bar value unless max value
+			{
+				m_cdNum += m_cdIncrement;
+				m_cooldownBar.setSize(sf::Vector2f(m_cdNum, m_cdHeight));
+			}
+			else
+			{
+				m_cdNum = m_maxCd;
+				canClick = false;
+				m_cooldownBar.setFillColor(sf::Color::Red);
 			}
 		}
 	}
@@ -71,8 +84,46 @@ void GameplayScene::update(sf::Time t_dT)
 	m_finger.update(mousePos);
 	m_arm.setPosition(m_finger.getPosition());
 
-	// Set arm sprite
-	m_arm.isClicking(sf::Mouse::isButtonPressed(sf::Mouse::Left));
+	// Update cooldown
+
+	if (canClick) // faster decrement for when you cant click (cooldown)
+	{
+		// Set arm sprite
+		m_arm.isClicking(sf::Mouse::isButtonPressed(sf::Mouse::Left));
+
+		if (m_cdNum >= 0 + m_cdDecrement * t_dT.asSeconds()) // decrement cooldown value unless minimal value
+		{
+			m_cdNum -= m_cdDecrement * t_dT.asSeconds();
+		}
+		else
+		{
+			m_cdNum = 0;
+		}
+
+		m_cooldownBar.setSize(sf::Vector2f(m_cdNum, m_cdHeight));
+
+	}
+	else // faster decrementing
+	{
+		// Set arm sprite
+		m_arm.isClicking(false);
+
+		if (m_cdNum > 0 + m_cdFasterDecrement * t_dT.asSeconds())
+		{
+			m_cdNum -= m_cdFasterDecrement * t_dT.asSeconds();
+		}
+		else
+		{
+			m_cdNum = 0;
+			canClick = true; // if decrement reaches 0, cooldown is done
+			m_cooldownBar.setFillColor(sf::Color::Yellow);
+
+		}
+		m_cooldownBar.setSize(sf::Vector2f(m_cdNum, m_cdHeight));
+	}
+
+	m_cooldownBar.setPosition(m_finger.getPosition().x + m_cdBarXOffset, m_finger.getPosition().y + m_cdBarYOffset);
+
 
 }
 
@@ -90,6 +141,7 @@ void GameplayScene::render()
 	m_window->draw(m_finger.getBody());
 
 	m_window->draw(m_text);
+	m_window->draw(m_cooldownBar);
 
 	m_window->display();
 }
@@ -160,4 +212,11 @@ void GameplayScene::setupFont()
 	m_text.setOrigin(m_text.getLocalBounds().width/2, m_text.getLocalBounds().height / 2);
 	m_text.setFillColor(sf::Color::Black);
 	m_text.setPosition(RESOLUTION.x/2,RESOLUTION.y/2);
+}
+
+void GameplayScene::setupCooldown()
+{
+	m_cooldownBar.setFillColor(sf::Color::Yellow);
+	m_cooldownBar.setSize(sf::Vector2f(m_cdNum, m_cdHeight));
+	m_cooldownBar.setPosition(m_finger.getPosition().x + m_cdBarXOffset, m_finger.getPosition().y + m_cdBarYOffset);
 }
