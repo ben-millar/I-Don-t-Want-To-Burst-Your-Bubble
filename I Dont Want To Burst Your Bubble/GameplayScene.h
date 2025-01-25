@@ -52,7 +52,7 @@ private:
     const float m_maxCooldown = 100.0f;
     const float m_cdIncrement = 15.0f;
     const float m_cdDecrement = 15.0f;
-    const float m_cdFasterDecrement = 30.0f;
+    const float m_crampDecrement = 0.5f;
     const float m_cdBarYOffset = 0;
     const float m_cdBarXOffset = 30;
 

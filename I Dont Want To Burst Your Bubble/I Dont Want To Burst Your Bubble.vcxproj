@@ -41,14 +41,27 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\background.png" />
+    <Image Include="Assets\Images\bubble.png" />
+    <Image Include="Assets\Images\bubble_popped.png" />
+    <Image Include="Assets\Images\controls.png" />
     <Image Include="Assets\Images\controls_button.png" />
     <Image Include="Assets\Images\controls_button_pressed.png" />
+    <Image Include="Assets\Images\controls_pressed.png" />
+    <Image Include="Assets\Images\exit.png" />
     <Image Include="Assets\Images\exit_button.png" />
     <Image Include="Assets\Images\exit_button_pressed.png" />
+    <Image Include="Assets\Images\exit_pressed.png" />
+    <Image Include="Assets\Images\game_over.png" />
     <Image Include="Assets\Images\hand_click.png" />
     <Image Include="Assets\Images\hand_default.png" />
+    <Image Include="Assets\Images\main_logo.png" />
+    <Image Include="Assets\Images\main_screen_bg.png" />
+    <Image Include="Assets\Images\play.png" />
     <Image Include="Assets\Images\play_button.png" />
     <Image Include="Assets\Images\play_button_pressed.png" />
+    <Image Include="Assets\Images\play_pressed.png" />
+    <Image Include="Assets\Images\restart.png" />
+    <Image Include="Assets\Images\restart_pressed.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

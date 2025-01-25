@@ -17,6 +17,7 @@ public:
 
 	void move(sf::Vector2f t_delta) {
 		m_body.setPosition(m_body.getPosition() + t_delta);
+		m_bubbleSprite.setPosition(m_bubbleSprite.getPosition() + t_delta);
 	}
 
 	bool pop(sf::Vector2f t_mousePos);
@@ -35,10 +36,11 @@ private:
 	/// Texture for the bubble
 	/// </summary>
 	sf::Texture m_bubbleTexture;
-
+	sf::Texture m_poppedTexture;
 
 	virtual void draw(sf::RenderTarget& t_target, sf::RenderStates t_states) const override {
-		t_target.draw(m_body);
+		//t_target.draw(m_body);
+		t_target.draw(m_bubbleSprite, t_states);
 	}
 };
 

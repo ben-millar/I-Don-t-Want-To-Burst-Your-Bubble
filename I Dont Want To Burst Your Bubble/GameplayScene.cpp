@@ -21,6 +21,8 @@ GameplayScene::~GameplayScene()
 {
 }
 
+static sf::Vector2f lastMousePos{ 400.f, 400.f };
+
 void GameplayScene::processEvents()
 {
 	sf::Event event;
@@ -55,6 +57,14 @@ void GameplayScene::processEvents()
 				canClick = false;
 				m_cooldownBar.setFillColor(sf::Color::Red);
 			}
+		}
+
+		if (!canClick && event.type == sf::Event::MouseMoved) {
+			//m_cooldown -= m_crampDecrement;
+			float distance = std::hypot(event.mouseMove.x - lastMousePos.x, event.mouseMove.y - lastMousePos.y);
+			lastMousePos = sf::Vector2f(event.mouseMove.x, event.mouseMove.y);
+
+			m_cooldown -= distance / 400.f;
 		}
 	}
 }
@@ -112,9 +122,9 @@ void GameplayScene::update(sf::Time t_dT)
 		// Set arm sprite
 		m_arm.isClicking(false);
 
-		if (m_cooldown > 0 + m_cdFasterDecrement * t_dT.asSeconds())
+		if (m_cooldown > 0 + m_crampDecrement * t_dT.asSeconds())
 		{
-			m_cooldown -= m_cdFasterDecrement * t_dT.asSeconds();
+			m_cooldown -= m_crampDecrement * t_dT.asSeconds();
 		}
 		else
 		{
@@ -154,12 +164,12 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 	m_bubbles.clear();
 	m_bubbles.reserve(t_rows * t_cols);
 
-	float offset = 80.f;
+	float offset = 50.f;
 
 	for (int col = 0; col < t_cols; ++col) {
 		for (int row = 0; row < t_rows; ++row) {
 			sf::Vector2f pos{
-				400.f + col * offset,
+				(400.f + ((row%2) ? offset / 2.f : 0.0f)) + col * offset,
 				400.f + row * offset
 			};
 			m_bubbles.emplace_back(pos);
@@ -172,7 +182,7 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 
 	// Set the bubble wrap size and position
 	m_bubbleWrap.setOrigin(offset/2, offset/2);
-	m_bubbleWrap.setSize(sf::Vector2f(wrapWidth + offset, wrapHeight + offset));
+	m_bubbleWrap.setSize(sf::Vector2f(wrapWidth + (offset * 1.5), wrapHeight + offset));
 	m_bubbleWrap.setPosition(400.f, 400.f);
 	m_bubbleWrap.setFillColor(sf::Color { 131, 0, 4});
 }
