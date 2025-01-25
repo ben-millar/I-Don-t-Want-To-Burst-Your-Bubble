@@ -45,6 +45,9 @@
     <ClInclude Include="Arm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Header Files\SceneManager\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bubble.cpp">
@@ -65,12 +68,39 @@
     <ClCompile Include="Arm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Images\hand_click.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Assets\Images\hand_default.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\controls_button.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\controls_button_pressed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\exit_button.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\exit_button_pressed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\play_button.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Images\play_button_pressed.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

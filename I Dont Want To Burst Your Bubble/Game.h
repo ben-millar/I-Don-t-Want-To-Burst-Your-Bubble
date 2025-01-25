@@ -7,6 +7,7 @@
 
 #include "Globals.h"
 #include "GameplayScene.h"
+#include "MenuScene.h"
 #include "SceneManager.h"
 
 class Game
@@ -17,12 +18,14 @@ public:
 	~Game() = default;
 
 	void run();
+	void setupFont();
 
 private:
 
 	void init();
 
 	std::shared_ptr<sf::RenderWindow> m_window;
+
 };
 
 #endif
