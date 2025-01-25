@@ -27,6 +27,15 @@ private:
 
 	bool m_isPopped;
 
+	/// <summary>
+	/// Sprite for the bubble
+	/// </summary>
+	sf::Sprite m_bubbleSprite;
+	/// <summary>
+	/// Texture for the bubble
+	/// </summary>
+	sf::Texture m_bubbleTexture;
+
 	virtual void draw(sf::RenderTarget& t_target, sf::RenderStates t_states) const override {
 		t_target.draw(m_body);
 	}

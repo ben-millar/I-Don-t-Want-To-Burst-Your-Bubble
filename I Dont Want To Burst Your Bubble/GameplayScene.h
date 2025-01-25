@@ -26,6 +26,20 @@ public:
 private:
 
     /// <summary>
+    /// Variable to store the background music
+    /// </summary>
+    sf::Music m_music;
+
+    /// <summary>
+    /// Method to initialize the background music
+    /// </summary>
+    void initMusic();
+
+    void playMusic();
+
+    void stopMusic();
+
+    /// <summary>
     /// Creates a fresh new sheet of unpopped bubble wrap!
     /// </summary>
     /// <param name="t_rows">Number of rows of bubbles</param>

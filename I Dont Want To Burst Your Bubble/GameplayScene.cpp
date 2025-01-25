@@ -2,6 +2,10 @@
 
 GameplayScene::GameplayScene()
 {
+	initMusic();
+	playMusic();
+
+
 	m_numPopped = 0;
 	m_rows = 2;
 	m_cols = 3;
@@ -43,6 +47,7 @@ void GameplayScene::processEvents()
 
 void GameplayScene::update(sf::Time t_dT)
 {
+
 	m_gameTime += t_dT.asSeconds();
 
 	float sin_prim = generateSineWaveDelta(m_gameTime, 0.05, 0.0, 2.5);
@@ -59,7 +64,7 @@ void GameplayScene::update(sf::Time t_dT)
 
 void GameplayScene::render()
 {
-	m_window->clear(sf::Color::Black);
+	m_window->clear(sf::Color {133, 193, 255});
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
 
@@ -87,4 +92,24 @@ float GameplayScene::generateSineWaveDelta(double t_time, double t_frequency, do
 {
 	const float TWO_PI = 6.28318530718f;
 	return static_cast<float>(t_amplitude * TWO_PI * t_frequency * cos(TWO_PI * t_frequency * t_time + t_phase) * (1.0f / 60.0f));
+}
+
+void GameplayScene::initMusic()
+{
+	if (!m_music.openFromFile("Assets/Music/Music.wav"))
+	{
+		std::cout << "Error loading music file" << std::endl;
+	}
+
+	m_music.setLoop(true);
+}
+
+void GameplayScene::playMusic()
+{
+	m_music.play();
+}
+
+void GameplayScene::stopMusic()
+{
+	m_music.stop();
 }
