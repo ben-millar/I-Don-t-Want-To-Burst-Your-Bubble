@@ -61,6 +61,9 @@ void GameplayScene::update(sf::Time t_dT)
 			bub.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
 		});
 
+
+	m_bubbleWrap.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
+
 	sf::Vector2f worldPos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
 
 	m_finger.update(worldPos);
@@ -70,6 +73,8 @@ void GameplayScene::update(sf::Time t_dT)
 void GameplayScene::render()
 {
 	m_window->clear(sf::Color {133, 193, 255});
+
+	m_window->draw(m_bubbleWrap);
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
 	
@@ -93,6 +98,18 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 			m_bubbles.emplace_back(pos);
 		}
 	}
+
+	// Calculate the size of the bubble wrap
+	float wrapWidth = ((t_cols - 1) * offset);
+	float wrapHeight = ((t_rows - 1) * offset);
+
+	// Set the bubble wrap size and position
+	m_bubbleWrap.setOrigin(offset/2, offset/2);
+	m_bubbleWrap.setSize(sf::Vector2f(wrapWidth + offset, wrapHeight + offset));
+	m_bubbleWrap.setPosition(400.f, 400.f);
+	m_bubbleWrap.setFillColor(sf::Color { 131, 0, 4});
+
+	
 }
 
 float GameplayScene::generateSineWaveDelta(double t_time, double t_frequency, double t_phase, double t_amplitude)
