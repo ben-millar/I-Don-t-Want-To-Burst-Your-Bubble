@@ -4,6 +4,7 @@
 Finger::Finger()
 {
 	m_mouseDot.setRadius(5.0f);
+	m_mouseDot.setOrigin(5.0f, 5.0f);
 	m_mouseDot.setFillColor(sf::Color::Magenta);
 	m_mouseDot.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 }
@@ -15,9 +16,9 @@ void Finger::update(sf::Vector2f t_mousePosition)
 
 	m_velocity = t_mousePosition - m_mouseDot.getPosition();
 
-	length = std::sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y); // pythagoras
+	m_length = std::sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y); // pythagoras
 
-	move(length);
+	move(m_length);
 }
 
 
@@ -27,7 +28,7 @@ void Finger::move(float t_length)
 	if (t_length > m_speed)
 	{
 		m_velocity /= t_length;
-		m_velocity *= m_speed; // extends vector
+		m_velocity *= m_speed*t_length; // extends vector
 		m_location += m_velocity;
 		m_mouseDot.setPosition(m_location);
 	}
@@ -36,6 +37,11 @@ void Finger::move(float t_length)
 sf::CircleShape Finger::getBody()
 {
 	return m_mouseDot;
+}
+
+sf::Vector2f Finger::getPosition()
+{
+	return m_mouseDot.getPosition();
 }
 
 

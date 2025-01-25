@@ -24,12 +24,12 @@ private:
 
 	sf::CircleShape m_mouseDot; // circle
 
-	float length; // 
+	float m_length; 
 
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_location;
 
-	float m_speed{ 0.17f };
+	float m_speed{ 0.001f };
 
 
 };
