@@ -65,10 +65,13 @@ void GameplayScene::update(sf::Time t_dT)
 
 	m_bubbleWrap.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
 
+	// Set arm position
 	sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
 	m_finger.update(mousePos);
-
 	m_arm.setPosition(m_finger.getPosition());
+
+	// Set arm sprite
+	m_arm.isClicking(sf::Mouse::isButtonPressed(sf::Mouse::Left));
 
 }
 
