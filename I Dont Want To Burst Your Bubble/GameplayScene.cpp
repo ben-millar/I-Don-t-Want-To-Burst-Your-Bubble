@@ -157,6 +157,7 @@ void GameplayScene::setupFont()
 	m_text.setFont(m_font);
 	m_text.setCharacterSize(40);
 	m_text.setString("TEST of text");
+	m_text.setOrigin(m_text.getLocalBounds().width/2, m_text.getLocalBounds().height / 2);
 	m_text.setFillColor(sf::Color::Black);
-	m_text.setPosition(100,100);
+	m_text.setPosition(RESOLUTION.x/2,RESOLUTION.y/2);
 }
