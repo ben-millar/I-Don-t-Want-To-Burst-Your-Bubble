@@ -8,8 +8,6 @@ GameplayScene::GameplayScene()
 
 	freshWrap(m_rows, m_cols);
 
-	m_testBubble.setPosition({ 500.f, 500.f });
-
 	m_gameTime = 0.0;
 }
 
@@ -47,12 +45,16 @@ void GameplayScene::update(sf::Time t_dT)
 {
 	m_gameTime += t_dT.asSeconds();
 
-	float sin = generateSineWaveDelta(m_gameTime, 0.05f, 0.0f, 2.5f);
-	float sin2 = generateSineWaveDelta(m_gameTime, 0.5, 0.0f, 0.5f);
+	float sin_prim = generateSineWaveDelta(m_gameTime, 0.05, 0.0, 2.5);
+	float sin_sec = generateSineWaveDelta(m_gameTime, 0.333, 0.5, 0.5);
 
-	m_testBubble.move({ sin + sin2, 0.f });
+	float sin2_prim = generateSineWaveDelta(m_gameTime, 0.0333, 0.0, 2.5);
+	float sin2_sec = generateSineWaveDelta(m_gameTime, 0.5, 0.5, 0.5);
 
-
+	std::for_each(m_bubbles.begin(), m_bubbles.end(),
+		[&](auto& bub) {
+			bub.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
+		});
 }
 
 void GameplayScene::render()
@@ -60,8 +62,6 @@ void GameplayScene::render()
 	m_window->clear(sf::Color::Black);
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
-
-	m_window->draw(m_testBubble);
 
 	m_window->display();
 }
@@ -75,16 +75,16 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 	for (int col = 0; col < t_cols; ++col) {
 		for (int row = 0; row < t_rows; ++row) {
 			sf::Vector2f pos{
-				100.f + col * offset,
-				100.f + row * offset
+				400.f + col * offset,
+				400.f + row * offset
 			};
 			m_bubbles.emplace_back(pos);
 		}
 	}
 }
 
-float GameplayScene::generateSineWaveDelta(float t_time, float t_frequency, float t_phase, float t_amplitude)
+float GameplayScene::generateSineWaveDelta(double t_time, double t_frequency, double t_phase, double t_amplitude)
 {
 	const float TWO_PI = 6.28318530718f;
-	return t_amplitude * TWO_PI * t_frequency * cos(TWO_PI * t_frequency * t_time + t_phase) * (1.0f / 60.0f);
+	return static_cast<float>(t_amplitude * TWO_PI * t_frequency * cos(TWO_PI * t_frequency * t_time + t_phase) * (1.0f / 60.0f));
 }
