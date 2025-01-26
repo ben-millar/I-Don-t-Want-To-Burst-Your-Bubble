@@ -12,12 +12,23 @@ GameplayScene::GameplayScene()
 	m_rows = 1;
 	m_cols = 1;
 
-	freshWrap(m_rows, m_cols);
-
 	m_gameTime = 0.0;
 
 	setupFont();
 	setupCooldown();
+
+	m_holdingHandTex.loadFromFile("Assets/Images/holding_hand.png");
+	m_holdingHand.setTexture(m_holdingHandTex);
+	m_holdingHand.setScale(0.6f, 0.6f);
+	m_holdingHand.setOrigin({
+		m_holdingHand.getGlobalBounds().width * 0.4f,
+		m_holdingHand.getGlobalBounds().height * 0.1f
+		});
+
+	m_bubbleWrapBgTex.loadFromFile("Assets/Images/bubblewrap_bg.png");
+	m_bubbleWrapBg.setTexture(m_bubbleWrapBgTex);
+
+	freshWrap(m_rows, m_cols);
 }
 
 GameplayScene::~GameplayScene()
@@ -104,7 +115,8 @@ void GameplayScene::update(sf::Time t_dT)
 			bub.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
 		});
 
-	m_bubbleWrap.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
+	m_bubbleWrapBg.move({ sin_prim + sin_sec, sin2_prim + sin2_sec });
+	m_holdingHand.setPosition(m_bubbleWrapBg.getPosition());
 
 	// Set arm position
 	sf::Vector2f mousePos = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
@@ -152,8 +164,6 @@ void GameplayScene::update(sf::Time t_dT)
 	}
 
 	m_cooldownBar.setPosition(m_finger.getPosition().x + m_cdBarXOffset, m_finger.getPosition().y + m_cdBarYOffset);
-
-
 }
 
 void GameplayScene::render()
@@ -162,7 +172,8 @@ void GameplayScene::render()
 
 	m_window->draw(m_text);
 
-	m_window->draw(m_bubbleWrap);
+	m_window->draw(m_holdingHand);
+	m_window->draw(m_bubbleWrapBg);
 
 	for (auto& bub : m_bubbles) m_window->draw(bub);
 
@@ -184,8 +195,8 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 	for (int col = 0; col < t_cols; ++col) {
 		for (int row = 0; row < t_rows; ++row) {
 			sf::Vector2f pos{
-				(400.f + ((row%2) ? offset / 2.f : 0.0f)) + col * offset,
-				400.f + row * offset
+				(820.f + ((row%2) ? offset / 2.f : 0.0f)) + col * offset,
+				420.f + row * offset
 			};
 			m_bubbles.emplace_back(pos);
 		}
@@ -196,10 +207,12 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 	float wrapHeight = ((t_rows - 1) * offset);
 
 	// Set the bubble wrap size and position
-	m_bubbleWrap.setOrigin(offset/2, offset/2);
-	m_bubbleWrap.setSize(sf::Vector2f(wrapWidth + (offset * 1.5), wrapHeight + offset));
-	m_bubbleWrap.setPosition(400.f, 400.f);
-	m_bubbleWrap.setFillColor(sf::Color { 131, 0, 4});
+	m_bubbleWrapBg.setOrigin(offset/2, offset/2);
+	m_bubbleWrapBg.setScale(
+		(wrapWidth + (offset * 1.5)) / m_bubbleWrapBg.getLocalBounds().width,
+		(wrapHeight + offset) / m_bubbleWrapBg.getLocalBounds().height
+	);
+	m_bubbleWrapBg.setPosition(800.f, 400.f);
 }
 
 float GameplayScene::generateSineWaveDelta(double t_time, double t_frequency, double t_phase, double t_amplitude)
