@@ -46,7 +46,8 @@ private:
     Finger m_finger;
 
     sf::Font m_font;  // font for writing text
-    sf::Text m_text;
+    sf::Text m_scoreText;
+    sf::Text m_shakeText;
 
     sf::RectangleShape m_cooldownBar;
     float m_cdHeight = 10.0f;
@@ -67,7 +68,6 @@ private:
     int blueStartValue = 228;
 
     sf::Color m_cdBarColor = sf::Color(188, 144, 228);
-
 
     /// <summary>
     /// Method to initialize the background music
