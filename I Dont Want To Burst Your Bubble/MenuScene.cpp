@@ -30,8 +30,8 @@ MenuScene::MenuScene()
 	});
 
 	m_controlsButton = new Button(m_controlsTex, { 1120.f, 400.f });
-	m_controlsButton->setOnClick([]() {
-		std::cout << "Clicked controls" << std::endl;
+	m_controlsButton->setOnClick([&]() {
+		m_crampTimer = 1.f;
 	});
 
 	m_exitButton = new Button(m_exitTex, { 1120.f, 700.f });
@@ -84,6 +84,15 @@ void MenuScene::update(sf::Time t_dT)
 
 	// Set arm sprite
 	m_arm.isClicking(sf::Mouse::isButtonPressed(sf::Mouse::Left));
+
+	if (m_crampTimer > 0.f) {
+		m_arm.setCramping(true);
+		m_crampTimer -= t_dT.asSeconds();
+	}
+	else {
+		m_crampTimer = 0.f;
+		m_arm.setCramping(false);
+	}
 }
 
 void MenuScene::render()
