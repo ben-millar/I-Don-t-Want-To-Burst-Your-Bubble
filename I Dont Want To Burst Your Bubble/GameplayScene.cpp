@@ -63,7 +63,7 @@ void GameplayScene::processEvents()
 
 					//m_violinSound.play();
 					m_score++;
-					m_text.setString(std::to_string(m_score));
+					m_scoreText.setString(std::to_string(m_score));
 
 					if (++m_numPopped >= m_rows * m_cols) {
 						m_newWrapSound.play();
@@ -178,7 +178,7 @@ void GameplayScene::render()
 {
 	m_window->clear(m_bgColor);
 
-	m_window->draw(m_text);
+	m_window->draw(m_scoreText);
 
 	m_window->draw(m_holdingHand);
 	m_window->draw(m_bubbleWrapBg);
@@ -186,6 +186,11 @@ void GameplayScene::render()
 	for (auto& bub : m_bubbles) m_window->draw(bub);
 
 	m_window->draw(m_arm);
+
+	if (!canClick)
+	{
+		m_window->draw(m_shakeText);
+	}
 
 	// We don't need to draw this other than for debugging purposes
 	//m_window->draw(m_finger.getBody());
@@ -299,12 +304,22 @@ void GameplayScene::setupFont()
 		std::cout << "error with font file " << std::endl;
 	}
 
-	m_text.setFont(m_font);
-	m_text.setCharacterSize(300);
-	m_text.setString(std::to_string(m_score));
-	m_text.setOrigin(m_text.getLocalBounds().width/2, m_text.getLocalBounds().height / 2);
-	m_text.setFillColor(sf::Color::Black);
-	m_text.setPosition(RESOLUTION.x/2,RESOLUTION.y/2);
+	m_scoreText.setFont(m_font);
+	m_scoreText.setCharacterSize(300);
+	m_scoreText.setString(std::to_string(m_score));
+	m_scoreText.setOrigin(m_scoreText.getLocalBounds().width/2, m_scoreText.getLocalBounds().height / 2);
+	m_scoreText.setFillColor(sf::Color::Black);
+	m_scoreText.setPosition(RESOLUTION.x/2,RESOLUTION.y/2);
+
+
+	m_shakeText.setFont(m_font);
+	m_shakeText.setCharacterSize(50);
+	m_shakeText.setString("SHAKE IT OFF!");
+	m_shakeText.setOrigin(m_shakeText.getLocalBounds().width / 2, m_shakeText.getLocalBounds().height / 2);
+	m_shakeText.setFillColor(sf::Color::Black);
+	m_shakeText.setPosition(RESOLUTION.x / 2, 60);
+
+
 }
 
 void GameplayScene::setupCooldown()
