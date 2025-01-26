@@ -54,6 +54,7 @@
     <Image Include="Assets\Images\game_over.png" />
     <Image Include="Assets\Images\hand_click.png" />
     <Image Include="Assets\Images\hand_default.png" />
+    <Image Include="Assets\Images\holding_hand.jpg" />
     <Image Include="Assets\Images\main_logo.png" />
     <Image Include="Assets\Images\main_screen_bg.png" />
     <Image Include="Assets\Images\play.png" />

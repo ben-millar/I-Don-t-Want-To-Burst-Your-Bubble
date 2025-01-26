@@ -30,9 +30,11 @@ public:
     void setupCooldown();
 
 private:
+    sf::Texture m_bubbleWrapBgTex;
+    sf::Sprite m_bubbleWrapBg;
 
-    sf::RectangleShape m_bubbleWrap;
-
+    sf::Texture m_holdingHandTex;
+    sf::Sprite m_holdingHand;
 
     /// <summary>
     /// Variable to store the background music
