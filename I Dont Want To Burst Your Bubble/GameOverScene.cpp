@@ -26,6 +26,8 @@ GameOverScene::GameOverScene()
 		});
 
 	m_arm.setCramping(false);
+
+	setupFont();
 }
 
 GameOverScene::~GameOverScene()
@@ -68,9 +70,26 @@ void GameOverScene::render()
 	m_window->draw(m_bgSprite);
 	m_window->draw(m_gameOver);
 
+	m_window->draw(m_scoreText);
+
 	m_window->draw(*m_restartButton);
 
 	m_window->draw(m_arm);
 
 	m_window->display();
+}
+
+void GameOverScene::setupFont()
+{
+	if (!m_font.loadFromFile("Assets/Font/BubFont.ttf"))
+	{
+		std::cout << "error with font file " << std::endl;
+	}
+
+	m_scoreText.setFont(m_font);
+	m_scoreText.setCharacterSize(300);
+	m_scoreText.setString(std::to_string(global_score));
+	m_scoreText.setOrigin(m_scoreText.getLocalBounds().width / 2, m_scoreText.getLocalBounds().height / 2);
+	m_scoreText.setFillColor(sf::Color(59, 38, 162));
+	m_scoreText.setPosition(RESOLUTION.x * 0.1f, RESOLUTION.y * 0.33f);
 }

@@ -23,3 +23,5 @@ int main()
 
 	return 0;
 }
+
+int global_score = 0;

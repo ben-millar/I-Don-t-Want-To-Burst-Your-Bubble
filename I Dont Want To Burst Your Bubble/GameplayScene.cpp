@@ -188,6 +188,7 @@ void GameplayScene::update(sf::Time t_dT)
 
 	// Track game time
 	if (m_gameTime > m_roundTime) {
+		global_score = m_score;
 		SceneManager::getInstance()->setScene(SceneType::GAME_OVER);
 	}
 }

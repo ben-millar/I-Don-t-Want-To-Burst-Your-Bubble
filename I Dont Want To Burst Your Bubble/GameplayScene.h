@@ -42,7 +42,6 @@ private:
     /// </summary>
     sf::Music m_music;
 
-
     // finger
     Finger m_finger;
 

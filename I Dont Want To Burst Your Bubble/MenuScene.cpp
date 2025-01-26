@@ -88,6 +88,7 @@ void MenuScene::update(sf::Time t_dT)
 	if (m_crampTimer > 0.f) {
 		m_arm.setCramping(true);
 		m_crampTimer -= t_dT.asSeconds();
+
 	}
 	else {
 		m_crampTimer = 0.f;

@@ -35,6 +35,11 @@ private:
 
     Arm m_arm;
     Finger m_finger;
+
+    sf::Font m_font;
+    sf::Text m_scoreText;
+
+    void setupFont();
 };
 
 #endif
