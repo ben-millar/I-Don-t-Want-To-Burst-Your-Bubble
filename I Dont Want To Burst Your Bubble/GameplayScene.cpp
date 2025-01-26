@@ -144,8 +144,8 @@ void GameplayScene::update(sf::Time t_dT)
 		m_cooldownBar.setSize(sf::Vector2f(m_cooldown, m_cdHeight));
 
 		m_cdBarColor.r = 188 + ((m_cooldown / 100) * (255 - 188));
-		m_cdBarColor.g = 144 - ((m_cooldown / 100) * (255 - 188));
-		m_cdBarColor.g = 228 - ((m_cooldown / 100) * (255 - 188));
+		m_cdBarColor.g = 144 + ((m_cooldown / 100) * (111 - 144));
+		m_cdBarColor.b = 228 + ((m_cooldown / 100) * (16 - 228));
 		m_cooldownBar.setFillColor(m_cdBarColor);
 
 	}
