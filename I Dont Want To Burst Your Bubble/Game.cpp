@@ -9,6 +9,7 @@ void Game::run()
 
 	sceneManager->registerScene<MenuScene>(SceneType::MAIN_MENU);
 	sceneManager->registerScene<GameplayScene>(SceneType::GAMEPLAY);
+	sceneManager->registerScene<GameOverScene>(SceneType::GAME_OVER);
 
 	sceneManager->setScene(SceneType::MAIN_MENU);
 	
