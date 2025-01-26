@@ -57,11 +57,11 @@ void MenuScene::processEvents()
 		if (sf::Event::Closed == event.type)
 			m_window->close();
 
-		if (sf::Event::KeyPressed == event.type) {
-			if (event.key.code == sf::Keyboard::Escape) {
-				m_window->close();
-			}
-		}
+		//if (sf::Event::KeyPressed == event.type) {
+		//	if (event.key.code == sf::Keyboard::Escape) {
+		//		m_window->close();
+		//	}
+		//}
 
 		for (auto& button : m_buttons) {
 			if (button->handleEvent(event, m_window)) return;

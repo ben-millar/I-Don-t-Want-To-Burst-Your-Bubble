@@ -50,6 +50,8 @@ void GameplayScene::processEvents()
 					m_popSound.play();
 
 					//m_violinSound.play();
+					m_score++;
+					m_text.setString(std::to_string(m_score));
 
 					if (++m_numPopped >= m_rows * m_cols) {
 						m_newWrapSound.play();
@@ -68,7 +70,7 @@ void GameplayScene::processEvents()
 			{
 				m_cooldown = m_maxCooldown;
 				canClick = false;
-				m_cooldownBar.setFillColor(sf::Color::Red);
+				m_cooldownBar.setFillColor(sf::Color(255, 111, 16));
 			}
 		}
 
@@ -143,7 +145,7 @@ void GameplayScene::update(sf::Time t_dT)
 		{
 			m_cooldown = 0;
 			canClick = true; // if decrement reaches 0, cooldown is done
-			m_cooldownBar.setFillColor(sf::Color::Yellow);
+			m_cooldownBar.setFillColor(m_cdBarColor);
 
 		}
 		m_cooldownBar.setSize(sf::Vector2f(m_cooldown, m_cdHeight));
@@ -156,7 +158,9 @@ void GameplayScene::update(sf::Time t_dT)
 
 void GameplayScene::render()
 {
-	m_window->clear(sf::Color {133, 193, 255});
+	m_window->clear(m_bgColor);
+
+	m_window->draw(m_text);
 
 	m_window->draw(m_bubbleWrap);
 
@@ -166,8 +170,6 @@ void GameplayScene::render()
 
 	// We don't need to draw this other than for debugging purposes
 	//m_window->draw(m_finger.getBody());
-
-	m_window->draw(m_text);
 	m_window->draw(m_cooldownBar);
 
 	m_window->display();
@@ -277,8 +279,8 @@ void GameplayScene::setupFont()
 	}
 
 	m_text.setFont(m_font);
-	m_text.setCharacterSize(40);
-	m_text.setString("TEST of text");
+	m_text.setCharacterSize(300);
+	m_text.setString(std::to_string(m_score));
 	m_text.setOrigin(m_text.getLocalBounds().width/2, m_text.getLocalBounds().height / 2);
 	m_text.setFillColor(sf::Color::Black);
 	m_text.setPosition(RESOLUTION.x/2,RESOLUTION.y/2);
@@ -286,7 +288,7 @@ void GameplayScene::setupFont()
 
 void GameplayScene::setupCooldown()
 {
-	m_cooldownBar.setFillColor(sf::Color::Yellow);
+	m_cooldownBar.setFillColor(sf::Color(188,144,228));
 	m_cooldownBar.setSize(sf::Vector2f(m_cooldown, m_cdHeight));
 	m_cooldownBar.setPosition(m_finger.getPosition().x + m_cdBarXOffset, m_finger.getPosition().y + m_cdBarYOffset);
 }

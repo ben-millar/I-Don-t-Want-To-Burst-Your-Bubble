@@ -58,6 +58,9 @@ private:
 
     bool canClick = true;
 
+    sf::Color m_bgColor = sf::Color(83,58,203);
+    sf::Color m_cdBarColor = sf::Color(188, 144, 228);
+
 
     /// <summary>
     /// Method to initialize the background music
@@ -104,7 +107,9 @@ private:
     Arm m_arm;
 
     // Track the number of bubbles popped
-    int m_numPopped;
+    int m_numPopped; // resets after each level ends
+    int m_score;
+
 
     // Tracks the rows/columns of bubble wrap
     int m_rows;
