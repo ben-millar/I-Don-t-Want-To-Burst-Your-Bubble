@@ -43,6 +43,8 @@ private:
 
 	Arm m_arm;
 	Finger m_finger;
+
+	float m_crampTimer;
 };
 
 #endif
