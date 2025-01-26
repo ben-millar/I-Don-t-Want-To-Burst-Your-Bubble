@@ -63,12 +63,11 @@ private:
     bool canClick = true;
 
     sf::Color m_bgColor = sf::Color(83,58,203);
+    sf::Color m_cdBarColor = sf::Color(188, 144, 228);
 
     int redStartValue = 188;
     int greenStartValue = 144;
     int blueStartValue = 228;
-
-    sf::Color m_cdBarColor = sf::Color(188, 144, 228);
 
     /// <summary>
     /// Method to initialize the background music
