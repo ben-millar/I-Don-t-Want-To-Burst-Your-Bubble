@@ -18,19 +18,23 @@ MenuScene::MenuScene()
 		std::cout << "Unable to load exit button" << std::endl;
 	}
 
+	if (!m_mainLogoTex.loadFromFile("Assets/Images/main_logo.png")) {
+		std::cout << "Unable to load main logo" << std::endl;
+	}
+
 	m_bg.setTexture(m_bgTex);
 
-	m_playButton = new Button(m_playTex, { 1000.f, 100.f });
+	m_playButton = new Button(m_playTex, { 1120.f, 100.f });
 	m_playButton->setOnClick([]() {
 		SceneManager::getInstance()->setScene(SceneType::GAMEPLAY);
 	});
 
-	m_controlsButton = new Button(m_controlsTex, { 1000.f, 400.f });
+	m_controlsButton = new Button(m_controlsTex, { 1120.f, 400.f });
 	m_controlsButton->setOnClick([]() {
 		std::cout << "Clicked controls" << std::endl;
 	});
 
-	m_exitButton = new Button(m_exitTex, { 1000.f, 700.f });
+	m_exitButton = new Button(m_exitTex, { 1120.f, 700.f });
 	m_exitButton->setOnClick([&]() {
 		m_window->close();
 	});
@@ -40,6 +44,8 @@ MenuScene::MenuScene()
 		m_controlsButton,
 		m_exitButton
 	};
+
+	m_arm.setCramping(false);
 }
 
 MenuScene::~MenuScene()
@@ -57,11 +63,11 @@ void MenuScene::processEvents()
 		if (sf::Event::Closed == event.type)
 			m_window->close();
 
-		//if (sf::Event::KeyPressed == event.type) {
-		//	if (event.key.code == sf::Keyboard::Escape) {
-		//		m_window->close();
-		//	}
-		//}
+		if (sf::Event::KeyPressed == event.type) {
+			if (event.key.code == sf::Keyboard::Escape) {
+				m_window->close();
+			}
+		}
 
 		for (auto& button : m_buttons) {
 			if (button->handleEvent(event, m_window)) return;
@@ -84,6 +90,9 @@ void MenuScene::render()
 {
 	m_window->clear();
 
+	m_bg.setTexture(m_bgTex);
+	m_window->draw(m_bg);
+	m_bg.setTexture(m_mainLogoTex);
 	m_window->draw(m_bg);
 
 	std::for_each(m_buttons.begin(), m_buttons.end(),

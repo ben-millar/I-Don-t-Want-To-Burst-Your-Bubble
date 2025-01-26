@@ -15,7 +15,7 @@ Bubble::Bubble()
 	m_radius = 20.f;
 	m_body.setRadius(m_radius);
 	m_body.setOrigin(m_radius, m_radius);
-	m_body.setFillColor(sf::Color::Red);
+	m_body.setFillColor(sf::Color(255,255,255,64));
 
 	m_isPopped = false;
 }

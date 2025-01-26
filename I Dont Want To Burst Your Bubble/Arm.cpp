@@ -12,6 +12,10 @@ Arm::Arm()
 		std::cout << "Unable to load hand default :(" << std::endl;
 	}
 
+	if (!m_crampTex.loadFromFile("Assets/Images/cramped_hand.png")) {
+		std::cout << "Unable to load hand default :(" << std::endl;
+	}
+
 	m_arm.setTexture(m_defaultTex);
 	m_arm.setScale(-0.5f, 0.5f);
 	m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.65f, m_arm.getLocalBounds().height * 0.03f});
@@ -37,12 +41,30 @@ void Arm::setPosition(sf::Vector2f t_position)
 
 void Arm::isClicking(bool t_isClicking)
 {
+	if (m_isCramping) return;
+
 	if (t_isClicking) {
 		m_arm.setTexture(m_clickTex);
 		m_arm.setScale(-0.5f, 0.5f);
 		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.67f, m_arm.getLocalBounds().height * 0.03f });
 	}
 	else {
+		m_arm.setTexture(m_defaultTex);
+		m_arm.setScale(-0.5f, 0.5f);
+		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.65f, m_arm.getLocalBounds().height * 0.03f });
+	}
+}
+
+void Arm::setCramping(bool t_isCramping)
+{
+	if (t_isCramping) {
+		m_isCramping = true;
+		m_arm.setTexture(m_crampTex);
+		m_arm.setScale(0.6f, 0.6f);
+		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.20f, m_arm.getLocalBounds().height * 0.025f });
+	}
+	else {
+		m_isCramping = false;
 		m_arm.setTexture(m_defaultTex);
 		m_arm.setScale(-0.5f, 0.5f);
 		m_arm.setOrigin({ m_arm.getLocalBounds().width * 0.65f, m_arm.getLocalBounds().height * 0.03f });
