@@ -8,6 +8,7 @@
 #include "Globals.h"
 #include "GameplayScene.h"
 #include "MenuScene.h"
+#include "GameOverScene.h"
 #include "SceneManager.h"
 
 class Game

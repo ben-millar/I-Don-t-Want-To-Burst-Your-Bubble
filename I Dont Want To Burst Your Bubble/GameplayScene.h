@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+#include "SceneManager.h"
 #include "BaseScene.h"
 #include "Arm.h"
 #include "Bubble.h"
@@ -117,13 +118,17 @@ private:
     int m_numPopped; // resets after each level ends
     int m_score;
 
-
     // Tracks the rows/columns of bubble wrap
     int m_rows;
     int m_cols;
 
     // Atomically increasing tracker of game time since start
     double m_gameTime;
+
+    // Length of each round
+    double m_roundTime{ 30.f };
+
+    sf::RectangleShape m_gameTimeBar;
 };
 
 #endif

@@ -29,6 +29,11 @@ GameplayScene::GameplayScene()
 	m_bubbleWrapBg.setTexture(m_bubbleWrapBgTex);
 	m_bubbleWrapBg.setColor(sf::Color(255, 255, 255, 196));
 
+	m_gameTimeBar.setFillColor(sf::Color(255, 128, 0, 255));
+	m_gameTimeBar.setSize({ 40.f, RESOLUTION.y });
+	m_gameTimeBar.setOrigin(0.f, RESOLUTION.y);
+	m_gameTimeBar.setPosition({ RESOLUTION.x - 40.f, RESOLUTION.y });
+
 	freshWrap(m_rows, m_cols);
 }
 
@@ -175,6 +180,17 @@ void GameplayScene::update(sf::Time t_dT)
 
 	m_scoreText.setOrigin(m_scoreText.getLocalBounds().width / 2, m_scoreText.getLocalBounds().height / 2);
 	m_scoreText.setPosition(RESOLUTION.x / 2, RESOLUTION.y / 2.5);
+
+	m_gameTimeBar.setSize({
+		m_gameTimeBar.getSize().x,
+		(float)(RESOLUTION.y - (RESOLUTION.y * (m_gameTime / m_roundTime)))
+		});
+
+	// Track game time
+	std::cout << m_gameTime << std::endl;
+	if (m_gameTime > m_roundTime) {
+		SceneManager::getInstance()->setScene(SceneType::GAME_OVER);
+	}
 }
 
 void GameplayScene::render()
@@ -182,6 +198,8 @@ void GameplayScene::render()
 	m_window->clear(m_bgColor);
 
 	m_window->draw(m_scoreText);
+
+	m_window->draw(m_gameTimeBar);
 
 	m_window->draw(m_holdingHand);
 	m_window->draw(m_bubbleWrapBg);
@@ -205,6 +223,8 @@ void GameplayScene::render()
 void GameplayScene::freshWrap(int t_rows, int t_cols) {
 	m_bubbles.clear();
 	m_bubbles.reserve(t_rows * t_cols);
+
+	m_gameTime = 0.0;
 
 	float offset = 50.f;
 
