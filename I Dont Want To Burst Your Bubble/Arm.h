@@ -16,10 +16,16 @@ public:
 
 	void isClicking(bool t_isClicking);
 
+	void setCramping(bool t_isCramping);
+
 private:
 	sf::Texture m_defaultTex;
 	sf::Texture m_clickTex;
+	sf::Texture m_crampTex;
+
 	sf::Sprite m_arm;
+
+	bool m_isCramping{ false };
 
 	virtual void draw(sf::RenderTarget& t_target, sf::RenderStates t_states) const override {
 		t_target.draw(m_arm);

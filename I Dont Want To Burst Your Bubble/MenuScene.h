@@ -28,6 +28,8 @@ public:
 private:
 	sf::Texture m_bgTex;
 	sf::Sprite m_bg;
+
+	sf::Texture m_mainLogoTex;
 	
 	sf::Texture m_playTex;
 	sf::Texture m_controlsTex;

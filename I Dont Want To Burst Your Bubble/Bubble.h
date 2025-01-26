@@ -39,7 +39,7 @@ private:
 	sf::Texture m_poppedTexture;
 
 	virtual void draw(sf::RenderTarget& t_target, sf::RenderStates t_states) const override {
-		//t_target.draw(m_body);
+		if (!m_isPopped) t_target.draw(m_body);
 		t_target.draw(m_bubbleSprite, t_states);
 	}
 };

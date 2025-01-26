@@ -27,6 +27,7 @@ GameplayScene::GameplayScene()
 
 	m_bubbleWrapBgTex.loadFromFile("Assets/Images/bubblewrap_bg.png");
 	m_bubbleWrapBg.setTexture(m_bubbleWrapBgTex);
+	m_bubbleWrapBg.setColor(sf::Color(255, 255, 255, 196));
 
 	freshWrap(m_rows, m_cols);
 }
@@ -81,6 +82,7 @@ void GameplayScene::processEvents()
 			{
 				m_cooldown = m_maxCooldown;
 				canClick = false;
+				m_arm.setCramping(true);
 				m_cooldownBar.setFillColor(sf::Color(255, 111, 16));
 			}
 		}
@@ -162,6 +164,7 @@ void GameplayScene::update(sf::Time t_dT)
 		{
 			m_cooldown = 0;
 			canClick = true; // if decrement reaches 0, cooldown is done
+			m_arm.setCramping(false);
 			m_cooldownBar.setFillColor(m_cdBarColor);
 
 		}
