@@ -179,7 +179,7 @@ void GameplayScene::update(sf::Time t_dT)
 	m_cooldownBar.setPosition(m_finger.getPosition().x + m_cdBarXOffset, m_finger.getPosition().y + m_cdBarYOffset);
 
 	m_scoreText.setOrigin(m_scoreText.getLocalBounds().width / 2, m_scoreText.getLocalBounds().height / 2);
-	m_scoreText.setPosition(RESOLUTION.x / 2, RESOLUTION.y / 2.5);
+	m_scoreText.setPosition(RESOLUTION.x / 2, RESOLUTION.y / 3.3);
 
 	m_gameTimeBar.setSize({
 		m_gameTimeBar.getSize().x,
@@ -328,7 +328,7 @@ void GameplayScene::setupFont()
 	}
 
 	m_scoreText.setFont(m_font);
-	m_scoreText.setCharacterSize(300);
+	m_scoreText.setCharacterSize(700);
 	m_scoreText.setString(std::to_string(m_score));
 	m_scoreText.setOrigin(m_scoreText.getLocalBounds().width/2, m_scoreText.getLocalBounds().height / 2);
 	m_scoreText.setFillColor(sf::Color(59,38,162));
