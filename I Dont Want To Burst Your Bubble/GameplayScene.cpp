@@ -253,6 +253,11 @@ void GameplayScene::freshWrap(int t_rows, int t_cols) {
 
 float GameplayScene::generateSineWaveDelta(double t_time, double t_frequency, double t_phase, double t_amplitude)
 {
+	float scaleX = WINDOW_WIDTH / RESOLUTION.x;
+	float scaleY = WINDOW_HEIGHT / RESOLUTION.y;
+
+	t_amplitude *= powf(scaleX, 7);
+
 	const float TWO_PI = 6.28318530718f;
 	return static_cast<float>(t_amplitude * TWO_PI * t_frequency * cos(TWO_PI * t_frequency * t_time + t_phase) * (1.0f / 60.0f));
 }

@@ -22,16 +22,16 @@ void Finger::update(sf::Vector2f t_mousePosition)
 
 void Finger::move(float t_length)
 {
-
 	if (t_length > m_speed)
 	{
-		m_velocity /= t_length;
-		m_velocity *= m_speed*t_length; // extends vector
-		m_location += m_velocity;
-
 		// Keep within bounds
 		float scaleX = WINDOW_WIDTH / RESOLUTION.x;
 		float scaleY = WINDOW_HEIGHT / RESOLUTION.y;
+
+		m_velocity /= t_length;
+		m_velocity *= m_speed*t_length* powf(scaleX, 7); // extends vector
+		m_location += m_velocity;
+
 
 		m_location.x = std::clamp(m_location.x, 0.f, RESOLUTION.x);
 		m_location.y = std::clamp(m_location.y, 0.f, RESOLUTION.y);
