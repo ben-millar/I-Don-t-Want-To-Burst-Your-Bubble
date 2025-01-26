@@ -187,7 +187,6 @@ void GameplayScene::update(sf::Time t_dT)
 		});
 
 	// Track game time
-	std::cout << m_gameTime << std::endl;
 	if (m_gameTime > m_roundTime) {
 		SceneManager::getInstance()->setScene(SceneType::GAME_OVER);
 	}
